@@ -22,10 +22,37 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
+export const MinWidth: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: "165px", margin: "0 auto" }}>
+        <Story />
+      </div>
+    ),
+  ],
   args: {
-    imageUrl: "https://i.ibb.co/0s3pdnc/adidas-nmd.png",
-    name: "Adidas NMD",
-    price: 220,
+    item: {
+      id: "asdf",
+      imageUrl: "https://i.ibb.co/0s3pdnc/adidas-nmd.png",
+      name: "Adidas NMD",
+      price: 220,
+    },
+  },
+};
+export const MaxWidth: Story = {
+  decorators: [
+    (Story) => (
+      <div style={{ width: "400px", margin: "0 auto" }}>
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    item: {
+      id: "asdf",
+      imageUrl: "https://i.ibb.co/0s3pdnc/adidas-nmd.png",
+      name: "Adidas NMD",
+      price: 220,
+    },
   },
 };
