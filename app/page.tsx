@@ -10,7 +10,6 @@ export default async function Home() {
 
   return (
     <main>
-      <Header currentUser={null} hiddenCart={true} isAdmin={false} />
       <div className="flex flex-col items-center">
         <Directory sections={directorySections} />
       </div>

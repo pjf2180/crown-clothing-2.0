@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Open_Sans } from 'next/font/google';
-const openSans = Open_Sans({ weight: "variable", subsets:['latin'], axes: ['wdth'] })
+import { Open_Sans } from "next/font/google";
+import { Header } from "./ui/header/header.component";
+
+const openSans = Open_Sans({
+  weight: "variable",
+  subsets: ["latin"],
+  axes: ["wdth"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +24,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${openSans.className} open-sans-app-font`}>{children}</body>
+      <body className={`${openSans.className} open-sans-app-font mx-4`}>
+        <header>
+          <Header currentUser={null} hiddenCart={true} isAdmin={false} />
+        </header>
+        <div className="max-w-5xl mx-auto pb-5">{children}</div>
+      </body>
     </html>
   );
 }
