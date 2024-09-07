@@ -30,9 +30,11 @@ export default async function ProductCategoryPage({
       <div
         className={`
                 grid 
-                grid-cols-4 
+                grid-cols-2
                 gap-[10px] 
                 w-full
+                md:grid-cols-3
+                lg:grid-cols-4
             `}
       >
         {items.map((item: CollectionItemModel) => (
