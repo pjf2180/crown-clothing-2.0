@@ -1,5 +1,7 @@
-'use client';
+"use client";
 import Link from "next/link";
+import { CartDropdown } from "../cart-dropdown/cart-dropdown";
+import { useState } from "react";
 function ShoppingIcon() {
   return (
     <svg
@@ -70,9 +72,14 @@ export interface CartIconProps {
 }
 function CartIcon({ quantity, toggleCartHidden }: CartIconProps) {
   return (
-    <div onClick={() => toggleCartHidden()} className="w-[45px] h-[45px] relative flex items-center justify-center cursor-pointer">
+    <div
+      onClick={() => toggleCartHidden()}
+      className="w-[45px] h-[45px] relative flex items-center justify-center cursor-pointer"
+    >
       <ShoppingIcon />
-      <span className="absolute text-[10px] font-bold bottom-[12px]">{quantity}</span>
+      <span className="absolute text-[10px] font-bold bottom-[12px]">
+        {quantity}
+      </span>
     </div>
   );
 }
@@ -113,15 +120,33 @@ function Logo() {
 }
 export interface HeaderProps {
   currentUser: any;
-  hiddenCart: boolean;
   isAdmin: boolean;
 }
-
-export function Header({
-  currentUser,
-  hiddenCart,
-  isAdmin,
-}: HeaderProps) {
+const CART_ITEMS = [
+  {
+    id: 1,
+    imageUrl: "https://i.ibb.co/dJbG1cT/yeezy.png",
+    name: "Adidas Yeezy",
+    quantity: 2,
+    price: 230,
+  },
+  {
+    id: 2,
+    imageUrl: "https://i.ibb.co/dJbG1cT/yeezy.png",
+    name: "Adidas Yeezy",
+    quantity: 2,
+    price: 230,
+  },
+  {
+    id: 3,
+    imageUrl: "https://i.ibb.co/dJbG1cT/yeezy.png",
+    name: "Adidas Yeezy",
+    quantity: 2,
+    price: 230,
+  },
+];
+export function Header({ currentUser, isAdmin }: HeaderProps) {
+  const [hiddenCart, setHiddenCart] = useState(true);
   return (
     <div className="h-[60px] w-full relative flex items-center justify-between md:mx-0 md:py-0">
       <Link className="px-4 py-2 cursor-pointer" href="/">
@@ -150,9 +175,14 @@ export function Header({
             Sign In
           </Link>
         )}
-        <CartIcon quantity={0} toggleCartHidden={()=> {}}></CartIcon>
+        <CartIcon
+          quantity={0}
+          toggleCartHidden={() => {
+            setHiddenCart((x) => !x);
+          }}
+        ></CartIcon>
       </div>
-      {hiddenCart ? null : <p>Cart dropdown goes here</p>}
+      {hiddenCart ? null : <CartDropdown cartItems={CART_ITEMS} />}
     </div>
   );
 }
