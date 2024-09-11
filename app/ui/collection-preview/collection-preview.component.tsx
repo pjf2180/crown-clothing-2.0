@@ -9,8 +9,8 @@ export interface CollectionPreviewProps {
 export function CollectionPreview({ items, title, itemCount = 4 }: CollectionPreviewProps) {
   return (
     <div className="collection-preview">
-      <h1 className="text-2xl">{title.toUpperCase()}</h1>
-      <div className="grid grid-cols-2 gap-[5px] row-gap-[50px] mb-8 md:flex md:justify-center md:w-full">
+      <h2 className="text-3xl mb-1">{title.toUpperCase()}</h2>
+      <div className="grid grid-cols-2 gap-[5px] row-gap-[40px] mb-6 md:flex md:justify-center md:w-full">
         {items
           .filter((_, idx) => idx < itemCount)
           .map((item) => (

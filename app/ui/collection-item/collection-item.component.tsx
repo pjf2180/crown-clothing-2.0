@@ -11,7 +11,7 @@ export function CollectionItem({ item }: CollectionItemProps) {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col h-[350px] items-center relative justify-center w-full group">
+    <div className="flex flex-col h-[350px] items-center relative justify-center w-full group pb-3">
       <div
         className="w-full h-[95%] bg-cover bg-center mb-[5px] transition-opacity duration-300 group-hover:opacity-80"
         style={{ backgroundImage: `url(${imageUrl})` }}

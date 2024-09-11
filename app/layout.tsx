@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`${openSans.className} open-sans-app-font mx-4`}>
         <StoreProvider>
           <header>
-            <Header currentUser={null} isAdmin={false} />
+            <Header />
           </header>
           <div className="max-w-5xl mx-auto pb-5">{children}</div>
         </StoreProvider>

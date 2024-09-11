@@ -19,14 +19,15 @@ export default async function ProductCategoryPage({
             items-center
             w-full`}
     >
-      <h2
+      <h1
         className={`
                 text-[38px]
+                font-normal
                 mx-auto mb-[30px]
             `}
       >
         {collection.title}
-      </h2>
+      </h1>
       <div
         className={`
                 grid 
