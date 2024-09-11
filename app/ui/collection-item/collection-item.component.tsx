@@ -1,11 +1,15 @@
-'use client';
+"use client";
 import { CollectionItemModel } from "@/app/lib/models/collectionItem.models";
+import { AddItemToCartAction } from "@/app/lib/store/cart/cart.actions";
+import { useDispatch } from "react-redux";
 
 export interface CollectionItemProps {
   item: CollectionItemModel;
 }
 export function CollectionItem({ item }: CollectionItemProps) {
   const { name, price, imageUrl } = item;
+  const dispatch = useDispatch();
+
   return (
     <div className="flex flex-col h-[350px] items-center relative justify-center w-full group">
       <div
@@ -42,7 +46,9 @@ export function CollectionItem({ item }: CollectionItemProps) {
             group-hover:opacity-[0.85] 
             sm:opacity-100 
           `}
-        onClick={() => {}}
+        onClick={() => {
+          dispatch(AddItemToCartAction(item));
+        }}
       >
         Add to Cart
       </button>
