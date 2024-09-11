@@ -3,3 +3,10 @@ export const StoryFrameDecorator = (storyFn: () => React.ReactNode) => {
         {storyFn()}
     </div>)
 }
+
+export function StoryFontDecorator() {
+    return (storyFn: () => React.ReactNode) => {
+      return <div className="app-font">{storyFn()}</div>;
+    };
+  }
+  

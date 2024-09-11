@@ -19,6 +19,7 @@
     "@pothos/core": "^3.41.0",
     "@pothos/plugin-prisma": "^3.63.1",
     "@prisma/client": "^5.7.1",
+    "@reduxjs/toolkit": "^2.2.7",
     "@types/pg-format": "^1.0.5",
     "bcrypt": "^5.1.1",
     "clsx": "^2.0.0",
@@ -30,6 +31,7 @@
     "pg-format": "^1.0.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-redux": "^9.1.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
