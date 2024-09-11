@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Open_Sans } from "next/font/google";
 import { Header } from "./ui/header/header.component";
+import StoreProvider from "./lib/store/appStoreProvider";
 
 const openSans = Open_Sans({
   weight: "variable",
@@ -18,17 +19,16 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-  a: React.ReactNode;
-  b: React.ReactNode;
-  createDialog: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={`${openSans.className} open-sans-app-font mx-4`}>
-        <header>
-          <Header currentUser={null} isAdmin={false} />
-        </header>
-        <div className="max-w-5xl mx-auto pb-5">{children}</div>
+        <StoreProvider>
+          <header>
+            <Header currentUser={null} isAdmin={false} />
+          </header>
+          <div className="max-w-5xl mx-auto pb-5">{children}</div>
+        </StoreProvider>
       </body>
     </html>
   );
