@@ -1,9 +1,12 @@
 import { CartItemModel } from "@/app/lib/models/cartItem.models";
 import { CartItem } from "../cart-item/cart-item.component";
+import { useRouter } from 'next/navigation';
+
 export interface CartDropdownProps {
   cartItems: CartItemModel[];
 }
 export function CartDropdown({ cartItems }: CartDropdownProps) {
+  const router = useRouter();
   return (
     <div className="w-[300px] absolute top-12 right-3 flex flex-col p-5 border border-solid border-black bg-white z-10">
       <div className="h-[240px] flex flex-col overflow-scroll">
@@ -14,7 +17,8 @@ export function CartDropdown({ cartItems }: CartDropdownProps) {
           <span className="empty-message">No items inside your cart.</span>
         ) : null}
       </div>
-      <button className="min-w-[165px] w-auto h-[50px] tracking-[0.5px] leading-[50px] px-[35px] text-[15px] uppercase font-bold cursor-pointer flex justify-center items-center bg-white text-black border border-black hover:bg-black hover:text-white hover:border-none">
+      <button className="min-w-[165px] w-auto h-[50px] tracking-[0.5px] leading-[50px] px-[35px] text-[15px] uppercase font-bold cursor-pointer flex justify-center items-center bg-white text-black border border-black hover:bg-black hover:text-white hover:border-none"
+      onClick={() => router.push('/checkout')}>
         Checkout
       </button>
     </div>
