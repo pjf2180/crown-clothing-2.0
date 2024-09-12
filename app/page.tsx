@@ -1,4 +1,3 @@
-import { Header } from "./ui/header/header.component";
 import { Directory } from "./ui/directory/directory.component";
 import { DirectorySection } from "./lib/models/directorySection.model";
 import { getCollectionDirectory } from "./lib/data/collections/getCollectionDirectory";
