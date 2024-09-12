@@ -1,12 +1,29 @@
-import { configureStore, createSelector} from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  configureStore,
+  createSelector,
+} from "@reduxjs/toolkit";
 import { cartReducer } from "./cart/cart.reducer";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      cart: cartReducer,
-    },
+  const reducers = {
+    cart: cartReducer,
+  };
+  const combinedReducers = combineReducers(reducers);
+  const persistConfig = {
+    key: "root",
+    storage,
+  };
+
+  const persistedReducer = persistReducer(persistConfig, combinedReducers);
+
+  const store = configureStore({
+    reducer: persistedReducer,
   });
+
+  return store;
 };
 
 // Infer the type of makeStore
