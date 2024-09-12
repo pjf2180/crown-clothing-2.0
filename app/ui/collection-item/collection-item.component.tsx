@@ -37,14 +37,12 @@ export function CollectionItem({ item }: CollectionItemProps) {
             border-black 
             hover:bg-black 
             hover:text-white
-            hover:border-none  
             w-[80%] 
-            opacity-[0.7] 
+            opacity-[1] 
             absolute 
             top-[255px]  
-            group-hover:flex 
-            group-hover:opacity-[0.85] 
-            sm:opacity-100 
+            group-hover:opacity-[1.0] 
+            md:opacity-0
           `}
         onClick={() => {
           dispatch(AddItemToCartAction(item));
