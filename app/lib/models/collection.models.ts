@@ -1,12 +1,14 @@
-import { CollectionItemModel } from "./collectionItem.models";
-
-export interface Collection {
-  id: string;
-  routeName: string;
-  title: string;
-  items: CollectionItemModel[];
-}
+import { Prisma } from "@prisma/client";
 
 export interface CollectionMap {
-  [key: string]: Collection;
+  [key: string]: CategoryWithItems;
 }
+
+// Define a type that includes the relation fields
+const categoryWithItems = Prisma.validator<Prisma.CategoryInclude>()({
+  items: true,
+});
+
+type CategoryWithItems = Prisma.CategoryGetPayload<{
+  include: typeof categoryWithItems;
+}>;
