@@ -17,12 +17,13 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
-  webpackFinal: (config) => {
-    config?.module?.rules?.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path.resolve(__dirname, '../'),
-    });
+  webpackFinal: async (config) => {
+    if (config?.resolve?.alias) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@": path.resolve(__dirname, "../"),
+      };
+    }
     return config;
   },
   docs: {
