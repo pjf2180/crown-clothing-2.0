@@ -1,21 +1,18 @@
-import { getCollections } from "../lib/data/collections/getCollections";
-import { CollectionMap } from "../lib/models/collection.models";
-import { CollectionItemModel } from "../lib/models/collectionItem.models";
+import {
+  CollectionPreviewModel,
+  getCollectionPreview,
+} from "../lib/data/collections/getCollectionPreview";
 import { CollectionPreview } from "../ui/collection-preview/collection-preview.component";
 
 export default async function ShopPage() {
-  const collectionMap: CollectionMap = await getCollections();
-  const collectionKeys: string[] = Object.keys(collectionMap);
+  const previews = await getCollectionPreview();
 
-  return collectionKeys.map((collectionKey: string) => {
-    const collectionTitle: string = collectionMap[collectionKey].title;
-    const collectionItems: CollectionItemModel[] =
-      collectionMap[collectionKey].items;
+  return previews.map((preview: CollectionPreviewModel) => {
     return (
       <CollectionPreview
-        key={collectionKey}
-        title={collectionTitle}
-        items={collectionItems}
+        key={preview.name}
+        title={preview.name}
+        items={preview.items}
       />
     );
   });
