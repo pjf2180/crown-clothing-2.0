@@ -1,16 +1,10 @@
-import { CollectionMap } from "@/app/lib/models/collection.models";
-import { CollectionItemModel } from "@/app/lib/models/collectionItem.models";
-import { CollectionItem } from "@/app/ui/collection-item/collection-item.component";
-import { getCollections } from "@/app/lib/data/collections/getCollections";
+import { PaginatedCollectionItems } from "@/app/ui/paginated-collection-items/paginated-collection-item";
 
 export default async function ProductCategoryPage({
   params,
 }: {
   params: { productCategory: string };
 }) {
-  const collectionItems: CollectionMap = await getCollections();
-  const collection = collectionItems[params.productCategory];
-  const { items } = collection;
   return (
     <div
       className={`
@@ -26,7 +20,7 @@ export default async function ProductCategoryPage({
                 mx-auto mb-[30px]
             `}
       >
-        {collection.title}
+        {params.productCategory}
       </h1>
       <div
         className={`
@@ -38,9 +32,7 @@ export default async function ProductCategoryPage({
                 lg:grid-cols-4
             `}
       >
-        {items.map((item: CollectionItemModel) => (
-          <CollectionItem key={item.id} item={item}></CollectionItem>
-        ))}
+        <PaginatedCollectionItems productCategory={params.productCategory} />
       </div>
     </div>
   );
