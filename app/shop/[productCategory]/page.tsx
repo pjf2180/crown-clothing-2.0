@@ -1,3 +1,5 @@
+import { getItems } from "@/app/lib/data/items/getItems";
+import { CollectionItem } from "@/app/ui/collection-item/collection-item.component";
 import { PaginatedCollectionItems } from "@/app/ui/paginated-collection-items/paginated-collection-item";
 
 export default async function ProductCategoryPage({
@@ -5,6 +7,7 @@ export default async function ProductCategoryPage({
 }: {
   params: { productCategory: string };
 }) {
+  const firstTenItems = await getItems(params.productCategory);
   return (
     <div
       className={`
@@ -24,7 +27,7 @@ export default async function ProductCategoryPage({
       </h1>
       <div
         className={`
-                grid 
+                grid
                 grid-cols-2
                 gap-[10px] 
                 w-full
@@ -32,7 +35,13 @@ export default async function ProductCategoryPage({
                 lg:grid-cols-4
             `}
       >
-        <PaginatedCollectionItems productCategory={params.productCategory} />
+        {firstTenItems.map((item) => (
+          <CollectionItem key={item.id} item={item} />
+        ))}
+        <PaginatedCollectionItems
+          cursor={firstTenItems[firstTenItems.length - 1].id}
+          productCategory={params.productCategory}
+        />
       </div>
     </div>
   );

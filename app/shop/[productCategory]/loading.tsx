@@ -3,26 +3,9 @@ import { GalleryLayout } from "@/app/ui/layouts/gallery/gallery-layout.component
 export default function Loading() {
   return (
     <GalleryLayout title="">
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
-      <ItemSkeleton />
+      {new Array(20).fill(0).map(() => (
+        <ItemSkeleton />
+      ))}
     </GalleryLayout>
   );
 }

@@ -5,11 +5,13 @@ import { CollectionItem } from "../collection-item/collection-item.component";
 
 export function PaginatedCollectionItems({
   productCategory,
+  cursor
 }: {
   productCategory: string;
+  cursor: number;
 }) {
   const [products, setProducts] = useState<{ [cursor: number]: Item[] }>([]);
-  const [latestCursor, setLatestCursor] = useState();
+  const [latestCursor, setLatestCursor] = useState(cursor);
 
   const fetchProducts = async (cursor?: number) => {
     try {
