@@ -15,7 +15,7 @@ export function Header() {
   return (
     <div className="h-[60px] w-full relative flex items-center justify-between md:mx-0 md:py-0">
       <Link className="px-4 py-2 cursor-pointer" href="/">
-        <AppLogo/>
+        <AppLogo />
       </Link>
       <div className="h-full flex items-center justify-end">
         <Link className="px-4 py-2 cursor-pointer" href="/shop">
@@ -46,7 +46,12 @@ export function Header() {
           }}
         ></CartIcon>
       </div>
-      {hiddenCart ? null : <CartDropdown cartItems={cartItems} />}
+      {hiddenCart ? null : (
+        <CartDropdown
+          cartItems={cartItems}
+          onClickOutside={() => setHiddenCart(true)}
+        />
+      )}
     </div>
   );
 }
