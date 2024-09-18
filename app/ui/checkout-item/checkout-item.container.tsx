@@ -1,6 +1,6 @@
 "use client";
 import { CartItemModel } from "@/app/lib/models/cartItem.models";
-import { CheckoutItem } from "./checkout-item";
+import { CheckoutItem } from "./checkout-item.component";
 import { useAppDispatch } from "@/app/lib/store/hooks";
 import {
   AddItemToCartAction,

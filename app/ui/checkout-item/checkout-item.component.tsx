@@ -17,7 +17,7 @@ export function CheckoutItem({
     <div className="w-full min-h-[100px] border-b border-darkgrey py-[15px] text-[20px] flex items-center">
       <span></span>
       <div className="w-[23%] pr-4">
-        <img className="w-full h-full" src={imageUrl} alt="item" />
+        <img className="w-full h-full" src={imageUrl ?? ''} alt="item" />
       </div>
       <span className="w-[23%]">{name}</span>
       <span className="w-[23%] flex items-center">
