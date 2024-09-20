@@ -59,7 +59,7 @@
     "typescript": "^5"
   },
   "prisma": {
-    "seed": "ts-node --transpile-only ./prisma/seed.ts",
+    "seed": "ts-node --transpile-only ./app/lib/scripts/seedDb.ts",
     "schema": "./app/lib/prisma/schema.prisma"
   }
 }
