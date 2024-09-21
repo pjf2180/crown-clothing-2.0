@@ -6,12 +6,13 @@ import { useAppSelector } from "@/app/lib/store/hooks";
 import { cartItemsSelector } from "@/app/lib/store/cart/cart.selectors";
 import { AppLogo } from "./appLogo.component";
 import { CartIcon } from "./cartIcon.component";
+import { useSession, signOut } from "next-auth/react";
 
 export function Header() {
   const [hiddenCart, setHiddenCart] = useState(true);
   const cartItems = useAppSelector(cartItemsSelector);
-  const currentUser = null;
-
+  const { status } = useSession();
+  const isLoggedIn = status === "authenticated";
   return (
     <div className="h-[60px] w-full relative flex items-center justify-between md:mx-0 md:py-0">
       <Link className="px-4 py-2 cursor-pointer" href="/">
@@ -21,21 +22,14 @@ export function Header() {
         <Link className="px-4 py-2 cursor-pointer" href="/shop">
           Shop
         </Link>
-        {currentUser ? (
-          <Link className="px-4 py-2 cursor-pointer" href="/orders">
-            Orders
-          </Link>
-        ) : null}
-        {currentUser ? (
-          <Link
-            className="px-4 py-2 cursor-pointer"
-            href="/"
-            onClick={() => {}}
-          >
-            Sign out
-          </Link>
+        {isLoggedIn ? (
+          <form action={() => signOut()}>
+            <button className="px-4 py-2 cursor-pointer" type="submit">
+              Sign out
+            </button>
+          </form>
         ) : (
-          <Link className="px-4 py-2 cursor-pointer" href="/signIn">
+          <Link className="px-4 py-2 cursor-pointer" href="/login">
             Sign In
           </Link>
         )}
