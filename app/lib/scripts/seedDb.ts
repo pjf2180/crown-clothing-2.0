@@ -6,6 +6,7 @@ async function main() {
   await prismaClient.$connect();
   await prismaClient.category.deleteMany();
   await prismaClient.item.deleteMany();
+  await prismaClient.user.deleteMany();
   await seedCollectionItems(prismaClient);
 }
 
