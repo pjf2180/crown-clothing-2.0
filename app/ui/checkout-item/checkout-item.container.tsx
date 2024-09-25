@@ -2,23 +2,27 @@
 import { CartItemModel } from "@/app/lib/models/cartItem.models";
 import { CheckoutItem } from "./checkout-item.component";
 import { useAppDispatch } from "@/app/lib/store/hooks";
+
 import {
-  AddItemToCartAction,
-  ClearItemFromCartAction,
-  RemoveItemFromCartAction,
-} from "@/app/lib/store/cart/cart.actions";
+  DecreaseItemQuantityThunk,
+  DeleteItemFromCartThunk,
+  IncreaseItemQuantityThunk,
+} from "@/app/lib/store/cart/cart.thunks";
+import { useSession } from "next-auth/react";
 
 export function CheckoutItemContainer({ item }: { item: CartItemModel }) {
+  const { data } = useSession();
+  const userId = data?.user?.id as string;
   const dispatch = useAppDispatch();
 
   const onAddItem = () => {
-    dispatch(AddItemToCartAction(item));
+    dispatch(IncreaseItemQuantityThunk({ item, userId }));
   };
   const onRemoveItem = () => {
-    dispatch(RemoveItemFromCartAction(item));
+    dispatch(DecreaseItemQuantityThunk({ item, userId }));
   };
   const onClearItem = () => {
-    dispatch(ClearItemFromCartAction(item));
+    dispatch(DeleteItemFromCartThunk({ item, userId }));
   };
 
   return (

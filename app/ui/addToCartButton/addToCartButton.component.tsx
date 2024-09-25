@@ -1,13 +1,17 @@
 "use client";
 import { CollectionItemModel } from "@/app/lib/models/collectionItem.models";
 import { AddItemToCartAction } from "@/app/lib/store/cart/cart.actions";
-import { useDispatch } from "react-redux";
+import { AddItemToCartThunk } from "@/app/lib/store/cart/cart.thunks";
+import { useAppDispatch } from "@/app/lib/store/hooks";
+import { useSession } from "next-auth/react";
 
 export interface AddToCartButtonProps {
   item: CollectionItemModel;
 }
 export function AddToCartButton({ item }: AddToCartButtonProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { data } = useSession();
+  const userId = data?.user?.id as string;
   return (
     <button
       className={`
@@ -34,7 +38,7 @@ export function AddToCartButton({ item }: AddToCartButtonProps) {
         md:opacity-0
       `}
       onClick={() => {
-        dispatch(AddItemToCartAction(item));
+        dispatch(AddItemToCartThunk({ userId, item }));
       }}
     >
       Add to Cart
