@@ -1,5 +1,6 @@
 import { CartItem, Item } from "@prisma/client";
 import { CartItemModel } from "../../models/cartItem.models";
+import { CartItemSyncDTO } from "../../models/cartItem.dtos";
 
 export async function getUserCart(userId: string): Promise<CartItemModel[]> {
   const response = await fetch(
@@ -69,4 +70,19 @@ export async function postItemToCartAction(
     options
   );
   await response.json();
+}
+
+export async function syncCartItemsRequest(
+  userEmail: string,
+  cartItems: CartItemSyncDTO[]
+): Promise<void> {
+  console.log('Running request')
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ items: cartItems }),
+  };
+  await fetch(`http://localhost:3000/api/cartSync?userEmail=${userEmail}`, options);
 }
