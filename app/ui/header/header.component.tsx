@@ -1,18 +1,29 @@
 "use client";
 import Link from "next/link";
 import { CartDropdown } from "../cart-dropdown/cart-dropdown";
-import { useState } from "react";
-import { useAppSelector } from "@/app/lib/store/hooks";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/lib/store/hooks";
 import { cartItemsSelector } from "@/app/lib/store/cart/cart.selectors";
 import { AppLogo } from "./appLogo.component";
 import { CartIcon } from "./cartIcon.component";
 import { useSession, signOut } from "next-auth/react";
+import { FetchUserCartThunk } from "@/app/lib/store/cart/cart.thunks";
+import { SetCartItemsAction } from "@/app/lib/store/cart/cart.actions";
 
 export function Header() {
   const [hiddenCart, setHiddenCart] = useState(true);
   const cartItems = useAppSelector(cartItemsSelector);
-  const { status } = useSession();
+  const { status, data } = useSession();
+  const dispatch = useAppDispatch();
+
   const isLoggedIn = status === "authenticated";
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(FetchUserCartThunk(data.user?.id as string));
+    }
+  }, [isLoggedIn]);
+
   return (
     <div className="h-[60px] w-full relative flex items-center justify-between md:mx-0 md:py-0">
       <Link className="px-4 py-2 cursor-pointer" href="/">
@@ -23,7 +34,7 @@ export function Header() {
           Shop
         </Link>
         {isLoggedIn ? (
-          <form action={() => signOut()}>
+        <form action={() => {dispatch(SetCartItemsAction([])); signOut();}}>
             <button className="px-4 py-2 cursor-pointer" type="submit">
               Sign out
             </button>
