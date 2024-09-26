@@ -4,15 +4,22 @@ import {
   AddItemToCartAction,
   ClearItemFromCartAction,
   RemoveItemFromCartAction,
+  SetCartItemsAction,
 } from "./cart.actions";
 import { CollectionItemModel } from "../../models/collectionItem.models";
-import { deleteItemFromCartAction, getUserCart, postItemToCartAction, updateItemQuantityRequest } from "../../clientApi/cart/cartApi";
+import {
+  deleteItemFromCartAction,
+  getUserCart,
+  postItemToCartAction,
+  updateItemQuantityRequest,
+} from "../../clientApi/cart/cartApi";
 
 export const FetchUserCartThunk = createAsyncThunk(
   "cart/fetchUserCart",
   async (userId: string, thunkAPI) => {
     const response = await getUserCart(userId);
-    return response;
+    const { dispatch } = thunkAPI;
+    dispatch(SetCartItemsAction(response));
   }
 );
 
