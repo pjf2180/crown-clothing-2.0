@@ -7,8 +7,7 @@ export async function GET(request: Request) {
   if (!session) {
     return NextResponse.json({ error: "User not authorized" }, { status: 401 });
   }
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("userId");
+  const userId = session.user?.id;
 
   if (!userId) {
     return NextResponse.json({ error: "User ID is required" }, { status: 400 });
