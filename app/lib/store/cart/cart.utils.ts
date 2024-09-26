@@ -3,6 +3,7 @@ import {
   AddItemFromCartActionType,
   ClearItemFromCartActionType,
   RemoveItemFromCartActionType,
+  SetCartItemsActionType,
 } from "./cart.actions";
 import { CartState } from "./cart.state";
 
@@ -45,4 +46,11 @@ export function clearItemFromCart(
     ...cartState,
     items: cartState.items.filter((item) => item.id !== action.payload.id),
   };
+}
+
+export function setCart(
+  cartState: CartState,
+  action: SetCartItemsActionType
+): void {
+  cartState.items = action.payload;
 }
