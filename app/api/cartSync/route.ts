@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
 import prisma from "../../lib/prisma/client";
 import { CartItem } from "@prisma/client";
-interface CartItemSyncDTO {
-  productId: number;
-  quantity: number;
-}
+import { CartItemSyncDTO } from "@/app/lib/models/cartItem.dtos";
+
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("userId");
+  const userEmail = searchParams.get("userEmail");
+  
 
-  if (!userId) {
-    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+  if (!userEmail) {
+    return NextResponse.json(
+      { error: "User email is required" },
+      { status: 400 }
+    );
   }
 
   try {
@@ -33,6 +35,15 @@ export async function POST(request: Request) {
 
     // Start transaction to handle deletion and creation safely
     await prisma.$transaction(async (prisma) => {
+      const user = await prisma.user.findFirst({
+        where: { email: userEmail },
+      });
+
+      const userId = user?.id;
+      if (!userId) {
+        throw Error();
+      }
+
       const existingCartItems = await prisma.cartItem.findMany({
         where: { userId },
       });
