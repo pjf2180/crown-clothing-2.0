@@ -27,8 +27,8 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${openSans.className} open-sans-app-font mx-4`}>
         <StoreProvider>
-          <SessionProvider session={session} >
-            <header>
+          <SessionProvider session={session}>
+            <header className="sticky top-0 z-10 bg-white">
               <Header />
             </header>
             <div className="max-w-5xl mx-auto pb-5">{children}</div>
