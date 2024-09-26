@@ -9,12 +9,23 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { loginAction } from "../../lib/actions";
 import { useFormState, useFormStatus } from "react-dom";
 import React from "react";
+import { useAppSelector } from "@/app/lib/store/hooks";
+import { cartItemsSelector } from "@/app/lib/store/cart/cart.selectors";
 
 export function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(loginAction, undefined);
+  const [formState, formAction] = useFormState(loginAction, {
+    errorMessage: undefined,
+  });
+  const { errorMessage } = formState;
+  const cartItems = useAppSelector(cartItemsSelector);
+  const cartItemsDTO = cartItems.map((x) => ({
+    productId: x.id,
+    quantity: x.quantity,
+  }));
 
   return (
-    <form action={dispatch} className="space-y-3">
+    <form action={formAction} className="space-y-3">
+      <input name="cart" hidden readOnly value={JSON.stringify(cartItemsDTO)} />
       <div className="flex-1  bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={` mb-3 text-2xl`}>Please log in to continue.</h1>
         <div className="w-full">
