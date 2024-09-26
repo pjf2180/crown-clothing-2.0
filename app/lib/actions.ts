@@ -6,22 +6,33 @@ import { getUser } from "./data/user/getUser";
 import { createUser } from "./data/user/createUser";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
+import { syncCartItemsRequest } from "./clientApi/cart/cartApi";
 
 export async function loginAction(
-  prevState: string | undefined,
+  prevState: { errorMessage?: string },
   formData: FormData
 ) {
   try {
-    formData.set("email", formData.get("login-email") ?? "");
-    formData.set("password", formData.get("login-password") ?? "");
-    await signIn("credentials", formData);
+    // TODO: validate formData fields
+    const email = formData.get("login-email") ?? "";
+    const url = await signIn("credentials", {
+      redirect: false,
+      email,
+      password: formData.get("login-password") ?? "",
+    });
+    const cartItemsJson = formData.get("cart");
+    await syncCartItemsRequest(
+      email as string,
+      cartItemsJson ? JSON.parse(cartItemsJson as string) : []
+    );
+    redirect(url);
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid credentials.";
+          return { errorMessage: "Invalid credentials." };
         default:
-          return "Something went wrong.";
+          return { errorMessage: "Something went wrong." };
       }
     }
     throw error;
