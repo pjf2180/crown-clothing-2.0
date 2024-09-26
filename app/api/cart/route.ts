@@ -1,14 +1,19 @@
 import { NextResponse } from "next/server";
 import prisma from "../../lib/prisma/client";
+import { auth } from "@/auth";
 
 export async function GET(request: Request) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "User not authorized" }, { status: 401 });
+  }
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
 
   if (!userId) {
     return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }
-  console.log('USER ID: ', userId);
+
   try {
     const cartItems = await prisma.cartItem.findMany({
       where: { userId },
@@ -28,11 +33,14 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId');
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "User not authorized" }, { status: 401 });
+  }
+  const userId = session.user?.id as string;
 
   if (!userId) {
-    return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }
 
   try {
@@ -40,7 +48,10 @@ export async function POST(request: Request) {
     const { productId } = await request.json();
 
     if (!productId) {
-      return NextResponse.json({ error: 'Product ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Product ID is required" },
+        { status: 400 }
+      );
     }
 
     // Check if the item exists
@@ -49,7 +60,7 @@ export async function POST(request: Request) {
     });
 
     if (!item) {
-      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+      return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
     // Check if the user already has the item in their cart
@@ -81,17 +92,23 @@ export async function POST(request: Request) {
       return NextResponse.json(newCartItem, { status: 201 });
     }
   } catch (error) {
-    console.error('Error adding item to cart:', error);
-    return NextResponse.json({ error: 'Error adding item to cart' }, { status: 500 });
+    console.error("Error adding item to cart:", error);
+    return NextResponse.json(
+      { error: "Error adding item to cart" },
+      { status: 500 }
+    );
   }
 }
 
 export async function PUT(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId');
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "User not authorized" }, { status: 401 });
+  }
+  const userId = session.user?.id as string;
 
   if (!userId) {
-    return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }
 
   try {
@@ -99,7 +116,10 @@ export async function PUT(request: Request) {
     const { productId, quantity } = await request.json();
 
     if (!productId || quantity === undefined) {
-      return NextResponse.json({ error: 'Product ID and quantity are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Product ID and quantity are required" },
+        { status: 400 }
+      );
     }
 
     // Check if the item exists
@@ -108,7 +128,7 @@ export async function PUT(request: Request) {
     });
 
     if (!item) {
-      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+      return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
     // Check if the user has the item in their cart
@@ -120,7 +140,10 @@ export async function PUT(request: Request) {
     });
 
     if (!existingCartItem) {
-      return NextResponse.json({ error: 'Item not found in cart' }, { status: 404 });
+      return NextResponse.json(
+        { error: "Item not found in cart" },
+        { status: 404 }
+      );
     }
 
     // Update the quantity of the existing cart item
@@ -131,17 +154,23 @@ export async function PUT(request: Request) {
 
     return NextResponse.json(updatedCartItem, { status: 200 });
   } catch (error) {
-    console.error('Error updating cart item quantity:', error);
-    return NextResponse.json({ error: 'Error updating cart item quantity' }, { status: 500 });
+    console.error("Error updating cart item quantity:", error);
+    return NextResponse.json(
+      { error: "Error updating cart item quantity" },
+      { status: 500 }
+    );
   }
 }
 
 export async function DELETE(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get('userId');
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "User not authorized" }, { status: 401 });
+  }
+  const userId = session.user?.id as string;
 
   if (!userId) {
-    return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }
 
   try {
@@ -149,7 +178,10 @@ export async function DELETE(request: Request) {
     const { productId } = await request.json();
 
     if (!productId) {
-      return NextResponse.json({ error: 'Product ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Product ID is required" },
+        { status: 400 }
+      );
     }
 
     // Check if the item exists in the cart
@@ -161,7 +193,10 @@ export async function DELETE(request: Request) {
     });
 
     if (!existingCartItem) {
-      return NextResponse.json({ error: 'Item not found in cart' }, { status: 404 });
+      return NextResponse.json(
+        { error: "Item not found in cart" },
+        { status: 404 }
+      );
     }
 
     // Delete the cart item
@@ -169,9 +204,15 @@ export async function DELETE(request: Request) {
       where: { id: existingCartItem.id },
     });
 
-    return NextResponse.json({ message: 'Item removed from cart' }, { status: 200 });
+    return NextResponse.json(
+      { message: "Item removed from cart" },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error('Error removing item from cart:', error);
-    return NextResponse.json({ error: 'Error removing item from cart' }, { status: 500 });
+    console.error("Error removing item from cart:", error);
+    return NextResponse.json(
+      { error: "Error removing item from cart" },
+      { status: 500 }
+    );
   }
 }
