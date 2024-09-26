@@ -1,5 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 import { CollectionItemModel } from "../../models/collectionItem.models";
+import { CartItemModel } from "../../models/cartItem.models";
 
 export const AddItemToCartAction =
   createAction<CollectionItemModel>("ADD_ITEM_TO_CART");
@@ -14,3 +15,8 @@ export const ClearItemFromCartAction = createAction<CollectionItemModel>(
   "CLEAR_ITEM_FROM_CART"
 );
 export type ClearItemFromCartActionType = ReturnType<typeof ClearItemFromCartAction>;
+
+export const SetCartItemsAction = createAction<CartItemModel[]>(
+  "SET_CART_ITEMS"
+);
+export type SetCartItemsActionType = ReturnType<typeof SetCartItemsAction>;
