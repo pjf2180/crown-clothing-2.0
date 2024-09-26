@@ -2,10 +2,8 @@ import { CartItem, Item } from "@prisma/client";
 import { CartItemModel } from "../../models/cartItem.models";
 import { CartItemSyncDTO } from "../../models/cartItem.dtos";
 
-export async function getUserCart(userId: string): Promise<CartItemModel[]> {
-  const response = await fetch(
-    `http://localhost:3000/api/cart?userId=${userId}`
-  );
+export async function getUserCart(): Promise<CartItemModel[]> {
+  const response = await fetch(`http://localhost:3000/api/cart`);
   const data: (CartItem & { item: Item })[] = await response.json();
   return data.map(
     (x): CartItemModel => ({
@@ -17,8 +15,8 @@ export async function getUserCart(userId: string): Promise<CartItemModel[]> {
     })
   );
 }
+
 export async function updateItemQuantityRequest(
-  userId: string,
   productId: number,
   quantity: number
 ): Promise<void> {
@@ -29,15 +27,11 @@ export async function updateItemQuantityRequest(
     },
     body: JSON.stringify({ productId, quantity }),
   };
-  const response = await fetch(
-    `http://localhost:3000/api/cart?userId=${userId}`,
-    options
-  );
+  const response = await fetch(`http://localhost:3000/api/cart`, options);
   await response.json();
 }
 
 export async function deleteItemFromCartAction(
-  userId: string,
   productId: number
 ): Promise<void> {
   const options = {
@@ -47,17 +41,11 @@ export async function deleteItemFromCartAction(
     },
     body: JSON.stringify({ productId }),
   };
-  const response = await fetch(
-    `http://localhost:3000/api/cart?userId=${userId}`,
-    options
-  );
+  const response = await fetch(`http://localhost:3000/api/cart`, options);
   await response.json();
 }
 
-export async function postItemToCartAction(
-  userId: string,
-  productId: number
-): Promise<void> {
+export async function postItemToCartAction(productId: number): Promise<void> {
   const options = {
     method: "POST",
     headers: {
@@ -65,10 +53,7 @@ export async function postItemToCartAction(
     },
     body: JSON.stringify({ productId }),
   };
-  const response = await fetch(
-    `http://localhost:3000/api/cart?userId=${userId}`,
-    options
-  );
+  const response = await fetch(`http://localhost:3000/api/cart`, options);
   await response.json();
 }
 
@@ -76,7 +61,6 @@ export async function syncCartItemsRequest(
   userEmail: string,
   cartItems: CartItemSyncDTO[]
 ): Promise<void> {
-  console.log('Running request')
   const options = {
     method: "POST",
     headers: {
@@ -84,5 +68,8 @@ export async function syncCartItemsRequest(
     },
     body: JSON.stringify({ items: cartItems }),
   };
-  await fetch(`http://localhost:3000/api/cartSync?userEmail=${userEmail}`, options);
+  await fetch(
+    `http://localhost:3000/api/cartSync?userEmail=${userEmail}`,
+    options
+  );
 }

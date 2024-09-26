@@ -17,7 +17,7 @@ import {
 export const FetchUserCartThunk = createAsyncThunk(
   "cart/fetchUserCart",
   async (userId: string, thunkAPI) => {
-    const response = await getUserCart(userId);
+    const response = await getUserCart();
     const { dispatch } = thunkAPI;
     dispatch(SetCartItemsAction(response));
   }
@@ -25,43 +25,41 @@ export const FetchUserCartThunk = createAsyncThunk(
 
 export const AddItemToCartThunk = createAsyncThunk(
   "cart/addItemToCart",
-  async (arg: { userId: string; item: CollectionItemModel }, thunkAPI) => {
+  async (arg: { item: CollectionItemModel }, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    const { userId, item } = arg;
+    const { item } = arg;
     dispatch(AddItemToCartAction(item));
-    const response = await postItemToCartAction(userId, item.id as number);
+    const response = await postItemToCartAction(item.id as number);
     return response;
   }
 );
 
 export const DeleteItemFromCartThunk = createAsyncThunk(
   "cart/addItemToCart",
-  async (arg: { userId: string; item: CollectionItemModel }, thunkAPI) => {
+  async (arg: { item: CollectionItemModel }, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    const { userId, item } = arg;
+    const { item } = arg;
     dispatch(ClearItemFromCartAction(item));
-    deleteItemFromCartAction(userId, item.id as number);
+    deleteItemFromCartAction(item.id as number);
   }
 );
 
 export const IncreaseItemQuantityThunk = createAsyncThunk(
   "cart/IncreaseItemQuantity",
-  async (arg: { userId: string; item: CartItemModel }, thunkAPI) => {
+  async (arg: { item: CartItemModel }, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    const { userId, item } = arg;
+    const { item } = arg;
     dispatch(AddItemToCartAction(item));
-    updateItemQuantityRequest(userId, item.id as number, item.quantity + 1);
+    updateItemQuantityRequest(item.id as number, item.quantity + 1);
   }
 );
 
 export const DecreaseItemQuantityThunk = createAsyncThunk(
   "cart/decreaseItemQuantity",
-  async (arg: { userId: string; item: CartItemModel }, thunkAPI) => {
+  async (arg: { item: CartItemModel }, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    const { userId, item } = arg;
+    const { item } = arg;
     dispatch(RemoveItemFromCartAction(item));
-    updateItemQuantityRequest(userId, item.id as number, item.quantity - 1);
+    updateItemQuantityRequest(item.id as number, item.quantity - 1);
   }
 );
-
-
