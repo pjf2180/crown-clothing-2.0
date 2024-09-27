@@ -11,20 +11,17 @@
     "add-prisma-migration": "prisma migrate dev --name --",
     "update-prisma-client": "prisma generate",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
-    "@pothos/core": "^3.41.0",
-    "@pothos/plugin-prisma": "^3.63.1",
     "@prisma/client": "^5.7.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/pg-format": "^1.0.5",
     "bcrypt": "^5.1.1",
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
-    "graphql": "^16.8.1",
-    "graphql-yoga": "^5.1.1",
     "next": "14.0.1",
     "next-auth": "^5.0.0-beta.4",
     "pg-format": "^1.0.4",
