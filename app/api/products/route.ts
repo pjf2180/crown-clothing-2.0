@@ -1,6 +1,7 @@
 import { getItems, getTotalItems } from "@/app/lib/data/items/getItems";
 
 export async function GET(request: Request) {
+  console.log(process.env)
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
   const category = params.get("category");

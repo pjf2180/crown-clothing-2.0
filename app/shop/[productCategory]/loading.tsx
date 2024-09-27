@@ -3,8 +3,8 @@ import { GalleryLayout } from "@/app/ui/layouts/gallery/gallery-layout.component
 export default function Loading() {
   return (
     <GalleryLayout title="">
-      {new Array(20).fill(0).map(() => (
-        <ItemSkeleton />
+      {new Array(20).fill(0).map((_, i) => (
+        <ItemSkeleton key={i} />
       ))}
     </GalleryLayout>
   );

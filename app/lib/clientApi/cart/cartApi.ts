@@ -2,8 +2,11 @@ import { CartItem, Item } from "@prisma/client";
 import { CartItemModel } from "../../models/cartItem.models";
 import { CartItemSyncDTO } from "../../models/cartItem.dtos";
 
+const CART_API_URL = `${process.env["NEXT_PUBLIC_APP_BASE_URL"]}/api/cart`;
+const CART_SYNC_API_URL = `${process.env["NEXT_PUBLIC_APP_BASE_URL"]}/api/cartSync`;
+
 export async function getUserCart(): Promise<CartItemModel[]> {
-  const response = await fetch(`http://localhost:3000/api/cart`);
+  const response = await fetch(CART_API_URL);
   const data: (CartItem & { item: Item })[] = await response.json();
   return data.map(
     (x): CartItemModel => ({
@@ -27,7 +30,7 @@ export async function updateItemQuantityRequest(
     },
     body: JSON.stringify({ productId, quantity }),
   };
-  const response = await fetch(`http://localhost:3000/api/cart`, options);
+  const response = await fetch(CART_API_URL, options);
   await response.json();
 }
 
@@ -41,7 +44,7 @@ export async function deleteItemFromCartAction(
     },
     body: JSON.stringify({ productId }),
   };
-  const response = await fetch(`http://localhost:3000/api/cart`, options);
+  const response = await fetch(CART_API_URL, options);
   await response.json();
 }
 
@@ -53,7 +56,7 @@ export async function postItemToCartAction(productId: number): Promise<void> {
     },
     body: JSON.stringify({ productId }),
   };
-  const response = await fetch(`http://localhost:3000/api/cart`, options);
+  const response = await fetch(CART_API_URL, options);
   await response.json();
 }
 
@@ -69,7 +72,7 @@ export async function syncCartItemsRequest(
     body: JSON.stringify({ items: cartItems }),
   };
   await fetch(
-    `http://localhost:3000/api/cartSync?userEmail=${userEmail}`,
+    `${CART_SYNC_API_URL}?userEmail=${userEmail}`,
     options
   );
 }

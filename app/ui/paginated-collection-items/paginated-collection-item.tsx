@@ -2,10 +2,11 @@
 import { Item } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { CollectionItem } from "../collection-item/collection-item.component";
+import { getProducts } from "@/app/api/products/calls";
 
 export function PaginatedCollectionItems({
   productCategory,
-  cursor
+  cursor,
 }: {
   productCategory: string;
   cursor: number;
@@ -15,17 +16,7 @@ export function PaginatedCollectionItems({
 
   const fetchProducts = async (cursor?: number) => {
     try {
-      const url = new URL("http://localhost:3000/api/products");
-      const params = new URLSearchParams(url.search);
-      if (cursor != undefined) {
-        params.set("cursor", cursor.toString());
-      }
-      params.set("limit", "10");
-      params.set("category", productCategory);
-      console.log(`${url.toString()}?${params.toString()}`);
-
-      const response = await fetch(`${url.toString()}?${params.toString()}`);
-      const jsonResponse = await response.json();
+      const jsonResponse = await getProducts(productCategory, cursor);
       const { data } = jsonResponse;
       setProducts((prev) => ({ ...prev, [jsonResponse.cursor]: data }));
       setLatestCursor(jsonResponse.cursor);
