@@ -1,6 +1,5 @@
 "use client";
 import { CollectionItemModel } from "@/app/lib/models/collectionItem.models";
-import { AddItemToCartAction } from "@/app/lib/store/cart/cart.actions";
 import { AddItemToCartThunk } from "@/app/lib/store/cart/cart.thunks";
 import { useAppDispatch } from "@/app/lib/store/hooks";
 import { useSession } from "next-auth/react";
@@ -38,7 +37,7 @@ export function AddToCartButton({ item }: AddToCartButtonProps) {
         md:opacity-0
       `}
       onClick={() => {
-        dispatch(AddItemToCartThunk({ userId, item }));
+        dispatch(AddItemToCartThunk({ item }));
       }}
     >
       Add to Cart

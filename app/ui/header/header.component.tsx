@@ -20,7 +20,7 @@ export function Header() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch(FetchUserCartThunk(data.user?.id as string));
+      dispatch(FetchUserCartThunk(data!.user?.id as string));
     }
   }, [isLoggedIn]);
 
