@@ -20,7 +20,6 @@ export function PaginatedCollectionItems({
       const { data } = jsonResponse;
       setProducts((prev) => ({ ...prev, [jsonResponse.cursor]: data }));
       setLatestCursor(jsonResponse.cursor);
-      console.log(jsonResponse);
     } catch (error) {
       console.error(error);
     }

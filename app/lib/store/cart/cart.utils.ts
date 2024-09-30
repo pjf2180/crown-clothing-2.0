@@ -12,7 +12,6 @@ export function addItemToCart(
   action: AddItemFromCartActionType
 ): void {
   const existingItem = cartState.items.find((i) => {
-    console.log(i.id, i.name);
     return i.id === action.payload.id;
   });
   if (existingItem) {
@@ -28,7 +27,6 @@ export function removeItemFromCart(
   action: RemoveItemFromCartActionType
 ) {
   const existingItem = cartState.items.find((i) => {
-    console.log(i.id, i.name);
     return i.id === action.payload.id;
   });
   if (existingItem?.quantity === 1) {

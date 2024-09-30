@@ -1,7 +1,6 @@
 const PRODUCTS_API_URL = `${process.env["NEXT_PUBLIC_APP_BASE_URL"]}/api/products`;
 
 export async function getProducts(productCategory: string, cursor?: number) {
-  console.log(PRODUCTS_API_URL);
   const url = new URL(PRODUCTS_API_URL);
   const params = new URLSearchParams(url.search);
   if (cursor != undefined) {
