@@ -3,6 +3,7 @@ import { CartItem } from "../cart-item/cart-item.component";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import useClickOutside from "../hooks/useClickOutside/useClickOutside";
+import { AppButton } from "../button/Button";
 
 export interface CartDropdownProps {
   cartItems: CartItemModel[];
@@ -25,15 +26,15 @@ export function CartDropdown({ cartItems, onClickOutside }: CartDropdownProps) {
           <span className="empty-message">No items inside your cart.</span>
         ) : null}
       </div>
-      <button
-        className="min-w-[165px] w-auto h-[50px] tracking-[0.5px] leading-[50px] px-[35px] text-[15px] uppercase font-bold cursor-pointer flex justify-center items-center bg-white text-black border border-black hover:bg-black hover:text-white hover:border-none"
+      <AppButton
+        className="w-full px-[35px] text-[15px] uppercase font-bold"
         onClick={() => {
           router.push("/checkout");
           onClickOutside();
         }}
       >
         Checkout
-      </button>
+      </AppButton>
     </div>
   );
 }
