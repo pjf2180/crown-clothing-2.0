@@ -18,13 +18,44 @@ export default async function ProductCategoryPage({
     >
       <h1
         className={`
+                max-md:hidden                
                 text-[38px]
                 font-normal
                 mx-auto mb-[30px]
+                md:sticky
+                md:z-30
+                md:top-0
+                dark:text-white
             `}
       >
         {params.productCategory}
       </h1>
+      <div
+        className={`
+          md:hidden  
+        bg-white
+          opacity-[0.97]
+          sticky
+          z-30
+          top-[61px]
+          w-full
+          flex
+          items-center
+          justify-center
+        `}
+      >
+          <h1
+            className={`
+              text-[38px]
+              font-normal
+              mx-auto
+              mb-2
+             
+            `}
+          >
+            {params.productCategory}
+          </h1>
+      </div>
       <div
         className={`
                 grid

@@ -25,7 +25,7 @@ export function Header() {
   }, [isLoggedIn]);
 
   return (
-    <div className="h-[60px] w-full relative flex items-center justify-between md:mx-0 md:py-0">
+    <nav className="bg-white opacity-[0.97] h-[60px] w-full relative flex items-center justify-between md:mx-0 md:py-0 dark:bg-black">
       <Link className="px-4 py-2 cursor-pointer" href="/">
         <AppLogo />
       </Link>
@@ -57,6 +57,6 @@ export function Header() {
           onClickOutside={() => setHiddenCart(true)}
         />
       )}
-    </div>
+    </nav>
   );
 }
