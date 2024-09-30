@@ -64,6 +64,8 @@ export default async function ProductCategoryPage({
                 w-full
                 md:grid-cols-3
                 lg:grid-cols-4
+                relative
+                pb-16
             `}
       >
         {firstTenItems.map((item) => (
