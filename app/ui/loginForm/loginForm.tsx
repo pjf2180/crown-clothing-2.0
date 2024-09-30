@@ -11,6 +11,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import React from "react";
 import { useAppSelector } from "@/app/lib/store/hooks";
 import { cartItemsSelector } from "@/app/lib/store/cart/cart.selectors";
+import { AppButton } from "../button/Button";
 
 export function LoginForm() {
   const [formState, formAction] = useFormState(loginAction, {
@@ -26,8 +27,12 @@ export function LoginForm() {
   return (
     <form action={formAction} className="space-y-3">
       <input name="cart" hidden readOnly value={JSON.stringify(cartItemsDTO)} />
-      <div className="flex-1  bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={` mb-3 text-2xl`}>Please log in to continue.</h1>
+      <div className="mb-3 text-2xl">
+
+        <div className="h-[65px] mb-3">
+          <h1 className={` mb-3 text-2xl`}>Login</h1>
+        </div>
+
         <div className="w-full">
           <div>
             <label
@@ -38,7 +43,7 @@ export function LoginForm() {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full  border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full h-[50px] border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="login-email"
                 type="text"
                 name="login-email"
@@ -57,7 +62,7 @@ export function LoginForm() {
             </label>
             <div className="relative">
               <input
-                className="peer block w-full  border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="peer block w-full h-[50px]  border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="login-password"
                 type="password"
                 name="login-password"
@@ -69,6 +74,7 @@ export function LoginForm() {
             </div>
           </div>
         </div>
+
         <LoginButton />
         <div
           className="flex h-8 items-end space-x-1"
@@ -82,6 +88,7 @@ export function LoginForm() {
             </>
           )}
         </div>
+        
       </div>
     </form>
   );
@@ -90,8 +97,13 @@ function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button disabled={pending} className="mt-4 w-full" aria-disabled={pending}>
+    <AppButton
+      type="submit"
+      disabled={pending}
+      className="mt-4 w-full"
+      aria-disabled={pending}
+    >
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-    </button>
+    </AppButton>
   );
 }
