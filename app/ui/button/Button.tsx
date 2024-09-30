@@ -1,52 +1,51 @@
-import React from 'react';
-import './button.css';
+import clsx from "clsx";
+import React, { ButtonHTMLAttributes } from "react";
 
-interface ButtonProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * Button contents
-   */
-  label: string;
-  /**
-   * Optional click handler
-   */
-  onClick?: () => void;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  label?: string;
+  children?: React.ReactNode;
 }
 
-/**
- * Primary UI component for user interaction
- */
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
+export function AppButton({
   label,
-  ...props
-}: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+  children,
+  ...buttonAttributes
+}: ButtonProps) {
+  const { className, disabled, ...passThroughProps } = buttonAttributes;
   return (
     <button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      {...props}
+      className={clsx(
+        `
+        h-[50px] 
+        w-[140px]
+        tracking-[0.5px] 
+        leading-[50px] 
+        text-[15px] 
+        uppercase 
+        font-bold 
+        cursor-pointer 
+        justify-center 
+        items-center 
+        bg-white 
+        text-black 
+        border 
+        border-black 
+        dark:bg-black 
+        dark:text-white 
+        dark:border-white 
+        px-1         
+      `,
+        {
+          "hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black":
+            !disabled, 
+          "opacity-50 cursor-default": disabled, 
+        },
+        className
+      )}
+      {...passThroughProps}
     >
-      {label}
-      <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style>
+      {children || label}
     </button>
   );
-};
+}
