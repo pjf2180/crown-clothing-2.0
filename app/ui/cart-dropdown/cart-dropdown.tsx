@@ -16,7 +16,7 @@ export function CartDropdown({ cartItems, onClickOutside }: CartDropdownProps) {
   return (
     <div
       ref={containerRef}
-      className="w-[300px] absolute top-12 right-3 flex flex-col p-5 border border-solid border-black bg-white z-10"
+      className="w-[300px] absolute top-12 right-3 flex flex-col p-5 border border-solid border-black bg-white"
     >
       <div className="h-[240px] flex flex-col overflow-scroll">
         {cartItems.map((cartItem: CartItemModel) => (

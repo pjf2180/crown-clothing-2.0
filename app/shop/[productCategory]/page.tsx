@@ -23,9 +23,9 @@ export default async function ProductCategoryPage({
                 font-normal
                 mx-auto mb-[30px]
                 md:sticky
-                md:z-30
                 md:top-0
                 dark:text-white
+                z-30
             `}
       >
         {params.productCategory}
@@ -36,12 +36,12 @@ export default async function ProductCategoryPage({
         bg-white
           opacity-[0.97]
           sticky
-          z-30
           top-[61px]
           w-full
           flex
           items-center
           justify-center
+          z-10
         `}
       >
           <h1
