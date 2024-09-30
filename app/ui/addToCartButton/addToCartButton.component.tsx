@@ -3,6 +3,7 @@ import { CollectionItemModel } from "@/app/lib/models/collectionItem.models";
 import { AddItemToCartThunk } from "@/app/lib/store/cart/cart.thunks";
 import { useAppDispatch } from "@/app/lib/store/hooks";
 import { useSession } from "next-auth/react";
+import { AppButton } from "../button/Button";
 
 export interface AddToCartButtonProps {
   item: CollectionItemModel;
@@ -12,35 +13,13 @@ export function AddToCartButton({ item }: AddToCartButtonProps) {
   const { data } = useSession();
   const userId = data?.user?.id as string;
   return (
-    <button
-      className={`
-        h-[50px] 
-        tracking-[0.5px] 
-        leading-[50px] 
-        text-[15px] 
-        uppercase 
-        font-bold 
-        cursor-pointer 
-        justify-center 
-        items-center 
-        bg-white 
-        text-black 
-        border 
-        border-black 
-        hover:bg-black 
-        hover:text-white
-        w-[80%] 
-        opacity-[1] 
-        absolute 
-        top-[255px]  
-        group-hover:opacity-[1.0] 
-        md:opacity-0
-      `}
+    <AppButton
+      className="w-[80%] opacity-[1] absolute top-[255px] md:opacity-0 group-hover:opacity-[1.0]"
       onClick={() => {
         dispatch(AddItemToCartThunk({ item }));
       }}
     >
       Add to Cart
-    </button>
+    </AppButton>
   );
 }
