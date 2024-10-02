@@ -4,8 +4,6 @@ import { Open_Sans } from "next/font/google";
 import { Header } from "./ui/header/header.component";
 import StoreProvider from "./lib/store/appStoreProvider";
 import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
-import { ThemeProvider } from "./themeProvider";
 
 const openSans = Open_Sans({
   weight: "variable",
@@ -23,20 +21,17 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
   return (
     <html lang="en">
       <body
         className={`${openSans.className} open-sans-app-font dark:text-white dark:bg-black`}
       >
         <StoreProvider>
-          <SessionProvider session={session}>
-            <ThemeProvider>
+          <SessionProvider>
               <header className="sticky z-20 top-0 border-b-[1px] md:border-0">
                 <Header />
               </header>
               <div className="max-w-5xl mx-auto pb-5 px-4">{children}</div>
-            </ThemeProvider>
           </SessionProvider>
         </StoreProvider>
       </body>
