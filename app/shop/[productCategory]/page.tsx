@@ -1,7 +1,14 @@
+import { getCollectionPreview } from "@/app/lib/data/collections/getCollectionPreview";
 import { getItems } from "@/app/lib/data/items/getItems";
 import { CollectionItem } from "@/app/ui/collection-item/collection-item.component";
 import { PaginatedCollectionItems } from "@/app/ui/paginated-collection-items/paginated-collection-item";
 
+export async function generateStaticParams() {
+  const categories = await getCollectionPreview();
+  return categories.map((x) => ({ productCategory: x.name }));
+}
+export const dynamic = "force-static";
+export const dynamicParams = false;
 export default async function ProductCategoryPage({
   params,
 }: {
@@ -44,17 +51,17 @@ export default async function ProductCategoryPage({
           z-10
         `}
       >
-          <h1
-            className={`
+        <h1
+          className={`
               text-[38px]
               font-normal
               mx-auto
               mb-2
              
             `}
-          >
-            {params.productCategory}
-          </h1>
+        >
+          {params.productCategory}
+        </h1>
       </div>
       <div
         className={`
