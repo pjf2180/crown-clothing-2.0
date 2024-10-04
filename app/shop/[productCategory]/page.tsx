@@ -7,7 +7,7 @@ export async function generateStaticParams() {
   const categories = await getCollectionPreview();
   return categories.map((x) => ({ productCategory: x.name }));
 }
-export const dynamic = "force-static";
+
 export const dynamicParams = false;
 export default async function ProductCategoryPage({
   params,
